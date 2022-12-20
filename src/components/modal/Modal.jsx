@@ -14,7 +14,7 @@ export function Modal({ onClose, alt, src }) {
             window.removeEventListener('keydown', handleKeyDown);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    });
 
 
     function handleKeyDown(event) {
