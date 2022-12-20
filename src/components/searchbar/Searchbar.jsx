@@ -10,6 +10,8 @@ import {
     SearchFormInput,
 } from './Searchbar.styled';
 
+
+
 class Searchbar extends Component {
     state = {
         query: '',
