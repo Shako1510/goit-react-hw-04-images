@@ -6,24 +6,23 @@ import { Overlay, ModalContainer } from './Modal.styled';
 const modalRoot = document.querySelector('#modal-root');
 
 export function Modal({ onClose, alt, src }) {
-
-    useEffect(() => {
-        window.addEventListener('keydown', handleKeyDown);
-
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    });
-
-
-    function handleKeyDown(event) {
+    const handleKeyDown = (event) => {
         if (event.code === 'Escape')
             onClose();
     }
-    function handleBackdropClick(event) {
-        if (event.target === event.currentTarget) onClose();
+
+    const handleBackdropClick = (event) => {
+        if (event.target === event.currentTarget)
+            onClose();
     };
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        }
+    });
+
     return createPortal(
         <Overlay onClick={handleBackdropClick}>
             <ModalContainer>
@@ -34,6 +33,12 @@ export function Modal({ onClose, alt, src }) {
     );
 
 }
+
+Modal.propTypes = {
+    src: PropTypes.string.isRequired,
+    alt: PropTypes.string,
+    onClose: PropTypes.func.isRequired,
+};
 
 // export class Modal extends Component {
 //     state = {
@@ -69,8 +74,3 @@ export function Modal({ onClose, alt, src }) {
 //     }
 // }
 
-Modal.propTypes = {
-    src: PropTypes.string.isRequired,
-    alt: PropTypes.string,
-    onClose: PropTypes.func.isRequired,
-};

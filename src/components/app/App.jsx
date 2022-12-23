@@ -19,17 +19,13 @@ export class App extends Component {
 
 
   async componentDidUpdate(prevProps, prevState) {
-    if (prevState.query !== this.state.query) {
-      this.getImages();
-    }
-
     if (
-      prevState.page !== this.state.page &&
-      prevState.query === this.state.query
+      prevState.page !== this.state.page ||
+      prevState.query !== this.state.query
     ) {
       this.getImages();
     }
-    this.scrollPage();
+
   }
 
   searchImage = query => {
@@ -43,18 +39,10 @@ export class App extends Component {
   };
 
   loadMore = () => {
-    this.setState(prevState => ({ page: prevState.page + 1 }));
-  };
 
-  async getImages() {
-    await getGalleryData(this.state.query, this.state.page)
-      .then(result => {
-        const newImages = [...this.state.images, ...result.images];
-        this.setState({ images: newImages, total: result.total });
-      })
-      .catch(error => this.setState({ error: error }))
-      .finally(() => this.setState({ loading: false }));
-  }
+    this.setState(prevState => ({ page: prevState.page + 1 }));
+
+  };
 
   scrollPage() {
     const { height: cardHeight } = document
@@ -65,6 +53,22 @@ export class App extends Component {
       top: cardHeight,
       behavior: 'smooth',
     });
+  }
+
+  async getImages() {
+
+    await getGalleryData(this.state.query, this.state.page,)
+      .then(result => {
+
+        const newImages = [...this.state.images, ...result.images];
+        this.setState({ images: newImages, total: result.total });
+        // if (result.status === 200) {
+        //   this.scrollPage();
+        // }
+      })
+
+      .catch(error => this.setState({ error: error }))
+      .finally(() => this.setState({ loading: false }))
   }
 
   render() {

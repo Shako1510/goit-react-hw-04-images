@@ -9,10 +9,10 @@ export function ImageGalleryItem(props) {
     const [modalOpen, setModalOpen] = useState(false);
 
     const toggleModal = () => {
-        setModalOpen(prevState => ({
-            modalOpen: !prevState.modalOpen,
-        }));
+        setModalOpen(prevState => !prevState,
+        )
     };
+
     const { largeImageURL, webformatURL, tags } = props.image;
 
     return (
@@ -29,6 +29,17 @@ export function ImageGalleryItem(props) {
     );
 
 }
+
+
+export default ImageGalleryItem;
+
+ImageGalleryItem.propTypes = {
+    image: PropTypes.shape({
+        largeImageURL: PropTypes.string.isRequired,
+        webformatURL: PropTypes.string.isRequired,
+        tags: PropTypes.string,
+    }).isRequired,
+};
 
 // class ImageGalleryItem extends Component {
 //     state = {
@@ -58,13 +69,3 @@ export function ImageGalleryItem(props) {
 //         );
 //     }
 // }
-
-export default ImageGalleryItem;
-
-ImageGalleryItem.propTypes = {
-    image: PropTypes.shape({
-        largeImageURL: PropTypes.string.isRequired,
-        webformatURL: PropTypes.string.isRequired,
-        tags: PropTypes.string,
-    }).isRequired,
-};

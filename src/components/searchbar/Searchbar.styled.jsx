@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 export const HeaderForm = styled.header` display: flex;
 justify-content: center;
 align-items: center;
-background-color: #4354b0;
+background-color: orange;
 padding-top: 10px;
 padding-bottom: 10px;
 margin-bottom: 20px;

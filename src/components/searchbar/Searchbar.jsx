@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { FcSearch } from 'react-icons/fc';
-
 import {
     HeaderForm,
     SearchForm,
@@ -13,11 +12,11 @@ import {
 export default function Searchbar({ onSubmit }) {
     const [query, setQuery] = useState('');
 
-
     const handleInput = event => {
         const query = event.currentTarget.value;
         setQuery(query);
     };
+
     const handleSubmit = event => {
         event.preventDefault();
         if (query.trim() === '') return alert('no search query');
@@ -45,8 +44,11 @@ export default function Searchbar({ onSubmit }) {
             </SearchForm>
         </HeaderForm>
     );
-
 }
+
+Searchbar.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+};
 
 // class Searchbar extends Component {
 //     state = {
@@ -91,6 +93,3 @@ export default function Searchbar({ onSubmit }) {
 
 // export default Searchbar;
 
-Searchbar.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-};
