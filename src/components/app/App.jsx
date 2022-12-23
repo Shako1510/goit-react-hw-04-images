@@ -1,11 +1,11 @@
 import { Component } from 'react';
 import Searchbar from '../searchbar/Searchbar';
-import ImageGallery from '../ImageGallery/ImageGallery';
+import ImageGallery from '../imageGallery/ImageGallery';
 import { getGalleryData } from 'servises/Api';
 
-import { Gallery } from '../ImageGallery/ImageGallery.styled';
-import Button from '../Button/Button';
-import Loader from '../Loader/Loader';
+import { Gallery } from '../imageGallery/ImageGallery.styled';
+import Button from '../button/Button';
+import Loader from '../loader/Loader';
 
 export class App extends Component {
   state = {

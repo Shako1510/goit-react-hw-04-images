@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
-export const HeaderForm = styled.header` display: flex;
+export const HeaderForm = styled.header` 
+display: flex;
 justify-content: center;
 align-items: center;
 background-color: orange;
@@ -9,7 +10,8 @@ padding-bottom: 10px;
 margin-bottom: 20px;
 `;
 
-export const SearchForm = styled.form` display: flex;
+export const SearchForm = styled.form`
+ display: flex;
 align-items: center;
 width: 100%;
 max-width: 600px;
@@ -18,7 +20,8 @@ border-radius: 3px;
 overflow: hidden;
 `;
 
-export const SearchFormButton = styled.button` display: inline-block;
+export const SearchFormButton = styled.button` 
+display: inline-block;
 width: 48px;
 height: 48px;
 border: 0;
@@ -37,7 +40,8 @@ outline: none;
 
 `;
 
-export const SearchFormButtonLabel = styled.span` position: absolute;
+export const SearchFormButtonLabel = styled.span` 
+position: absolute;
 width: 1px;
 height: 1px;
 padding: 0;
