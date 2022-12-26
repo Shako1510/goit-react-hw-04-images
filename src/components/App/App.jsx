@@ -1,11 +1,11 @@
 import { Component } from 'react';
-import Searchbar from './Searchbar';
-import ImageGallery from './ImageGallery';
+import Searchbar from '../SearchBar/Searchbar';
+import ImageGallery from '../ImageGallery/ImageGallery';
 import { getGalleryData } from 'servises/Api';
 
-import { Gallery } from './imageGallery/ImageGallery.styled';
-import Button from './Button';
-import Loader from './Loader';
+import { Gallery } from '../ImageGallery/ImageGallery.styled';
+import Button from '../Button/Button';
+import Loader from '../Loader/Loader';
 
 export class App extends Component {
   state = {
@@ -25,7 +25,7 @@ export class App extends Component {
     ) {
       this.getImages();
     }
-
+    this.scrollPage();
   }
 
   searchImage = query => {

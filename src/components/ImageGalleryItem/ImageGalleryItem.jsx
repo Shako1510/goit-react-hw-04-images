@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 import { GalleryItem, GalleryItemImage } from './ImageGalleryItem.styled';
-import { Modal } from './Modal';
+import { Modal } from '../Modal/Modal';
 import { useState } from 'react';
-
 
 export function ImageGalleryItem(props) {
 
@@ -27,9 +26,7 @@ export function ImageGalleryItem(props) {
             )}
         </GalleryItem>
     );
-
 }
-
 
 export default ImageGalleryItem;
 
