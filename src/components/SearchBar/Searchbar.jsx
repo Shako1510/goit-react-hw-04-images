@@ -24,6 +24,7 @@ export default function Searchbar({ onSubmit }) {
         setQuery('');
     };
 
+
     return (
         <HeaderForm>
             <SearchForm onSubmit={handleSubmit}>

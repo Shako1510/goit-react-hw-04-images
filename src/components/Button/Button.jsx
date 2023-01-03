@@ -1,4 +1,6 @@
 import { LoadMore } from './Button.styled';
+import PropTypes from 'prop-types';
+
 
 const Button = ({ clickHandle }) => {
     return (
@@ -8,4 +10,7 @@ const Button = ({ clickHandle }) => {
     );
 };
 
+Button.propTypes = {
+    clickHandle: PropTypes.func.isRequired,
+}
 export default Button;
