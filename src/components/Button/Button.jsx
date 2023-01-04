@@ -1,5 +1,5 @@
 import { LoadMore } from './Button.styled';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 
 const Button = ({ clickHandle }) => {
@@ -10,7 +10,7 @@ const Button = ({ clickHandle }) => {
     );
 };
 
-Button.propTypes = {
-    clickHandle: PropTypes.func.isRequired,
-}
+// Button.propTypes = {
+//     clickHandle: PropTypes.func.isRequired,
+// }
 export default Button;
