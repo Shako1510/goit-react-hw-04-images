@@ -3,7 +3,8 @@ import { GalleryList } from './ImageGallery.styled';
 
 import PropTypes from 'prop-types';
 
-export default function ImageGallery({ images }) {
+export default function ImageGallery(images) {
+    console.log(images);
     return (
         <GalleryList>
             {images.map(image => (
@@ -16,5 +17,5 @@ export default function ImageGallery({ images }) {
 
 
 ImageGallery.propTypes = {
-    images: PropTypes.array,
+    images: PropTypes.array.isRequired,
 };

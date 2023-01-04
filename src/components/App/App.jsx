@@ -8,6 +8,7 @@ import Button from '../Button/Button';
 import Loader from '../Loader/Loader';
 
 
+
 export default function App() {
 
   const [images, setImages] = useState([]);
@@ -19,22 +20,43 @@ export default function App() {
 
 
   useEffect(() => {
+    if (query) {
+      getImages();
+    }
 
-    getGalleryData({ query, page })
+    // getGalleryData({ query, page })
+    //   .then(result => {
+
+
+    //     const newImages = [...images, ...result.images];
+    //     console.log(newImages);
+    //     setImages({ images: newImages });
+    //     setTotal({ total: result.total });
+
+    //   })
+
+    //   .catch(error => setError({ error: error }))
+    //   .finally(() => setLoading({ loading: false }))
+
+    scrollPage();
+  },
+    [images, page, query]
+  )
+
+  const getImages = async () => {
+
+    await getGalleryData()
       .then(result => {
-
-        const newImages = [...images, ...result.images];
+        console.log(result);
+        const newImages = [...this.state.images, ...result.images];
         setImages({ images: newImages });
         setTotal({ total: result.total });
 
       })
 
-      .catch(error => setError({ error: error }))
-      .finally(() => setLoading({ loading: false }))
-
-    scrollPage();
-  }, [images, page, query]
-  )
+      .catch(error => this.setState({ error: error }))
+      .finally(() => this.setState({ loading: false }))
+  }
 
   const searchImage = (query) => {
     setLoading(true);
