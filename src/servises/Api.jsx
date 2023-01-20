@@ -22,5 +22,7 @@ export const getGalleryData = async (query, page) => {
             total: Math.ceil(response.data.totalHits / per_page),
         };
         return result;
+
     }
+
 };

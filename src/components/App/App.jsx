@@ -18,31 +18,26 @@ export function App() {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(1);
 
-
   useEffect(() => {
     if (query) {
       getImages();
     }
-    scrollPage();
-  }, [query]
-
+    scrollPage()
+  }, [query, page]
   )
 
+  const getImages = () => {
 
-  const getImages = async () => {
-
-    await getGalleryData({ images, total })
+    getGalleryData({ query, page })
       .then(result => {
-        console.log(result);
-        const newImages = [...images, ...result.images];
-        setImages([newImages])
-        console.log(newImages);
+        setImages(prev => [...images, ...result.images])
+
+
         setTotal({ total: result.total });
-
+        console.log(result.total)
       })
-
-      .catch(error => setError({ error: error }))
-      .finally(() => setLoading({ loading: false }))
+      .catch(error => console.log(error))
+      .finally(setLoading(false))
   }
 
   const searchImage = (query) => {
@@ -54,7 +49,7 @@ export function App() {
   }
 
   const loadMore = () => {
-    setPage(({ page: page + 1 }));
+    setPage(prev => prev.page + 1);
   };
 
   const scrollPage = () => {

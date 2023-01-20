@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 
 const ImageGallery = ({ images }) => {
 
-    console.log(images);
-
     return (
         <GalleryList>
             {images.map(image => (
@@ -19,5 +17,18 @@ const ImageGallery = ({ images }) => {
 export default ImageGallery;
 
 ImageGallery.propTypes = {
-    images: PropTypes.array
+    images: PropTypes.array,
+
 };
+
+// ImageGallery: PropTypes.arrayOf(
+//     PropTypes.shape(
+//         {
+//             images: PropTypes.arrayOf,
+//         }
+//     )
+// )
+
+// ImageGallery.PropTypes = {
+//     images: PropTypes.arrayOf
+// };
