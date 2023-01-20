@@ -19,28 +19,43 @@ export function App() {
   const [total, setTotal] = useState(1);
 
   useEffect(() => {
-    if (query) {
-      getImages();
+    if (!query) {
+      return;
     }
-    scrollPage()
-  }, [query, page]
+    const getImages = async () => {
+      await getGalleryData({ query, page })
+        .then(result => {
+          const newImages = [...images, ...result.images];
+          setImages(newImages);
+
+          setTotal({ total: result.total });
+
+        })
+        .catch(error => console.log(error))
+        .finally(setLoading(false))
+    }
+
+    getImages();
+    scrollPage();
+
+
+  }, [page, query, images]
   )
 
-  const getImages = () => {
+  // const getImages = async () => {
 
-    getGalleryData({ query, page })
-      .then(result => {
-        setImages(prev => [...images, ...result.images])
+  //   await getGalleryData({ query, page })
+  //     .then(result => {
+  //       setImages(prev => [...images, ...result.images])
+  //       console.log(result.images);
+  //       setTotal({ total: result.total });
+  //       console.log(result.total)
+  //     })
+  //     .catch(error => console.log(error))
+  //     .finally(setLoading(false))
+  // }
 
-
-        setTotal({ total: result.total });
-        console.log(result.total)
-      })
-      .catch(error => console.log(error))
-      .finally(setLoading(false))
-  }
-
-  const searchImage = (query) => {
+  const searchImage = query => {
     setLoading(true);
     setQuery(query);
     setError(null);
