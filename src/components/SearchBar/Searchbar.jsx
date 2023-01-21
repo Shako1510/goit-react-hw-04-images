@@ -21,6 +21,7 @@ export default function Searchbar({ onSubmit }) {
         event.preventDefault();
         if (query.trim() === '') return alert('no search query');
         onSubmit(query);
+        console.log(query);
         setQuery('');
     };
 

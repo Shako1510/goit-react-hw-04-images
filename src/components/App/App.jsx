@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import Searchbar from '../SearchBar/Searchbar';
 import ImageGallery from '../ImageGallery/ImageGallery';
-import { getGalleryData } from 'servises/Api';
-
+// import { getGalleryData } from 'servises/Api';
+import axios from 'axios';
 import { Gallery } from '../ImageGallery/ImageGallery.styled';
 import Button from '../Button/Button';
 import Loader from '../Loader/Loader';
@@ -16,55 +16,54 @@ export function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
-  const [total, setTotal] = useState(1);
+  // const [total, setTotal] = useState(1);
+
 
   useEffect(() => {
-    if (!query) {
-      return;
-    }
-    const getImages = async () => {
-      await getGalleryData({ query, page })
-        .then(result => {
-          const newImages = [...images, ...result.images];
-          setImages(newImages);
-
-          setTotal({ total: result.total });
-
-        })
+    if (query) {
+      setLoading(true)
+      getImages(query, page).then(response => {
+        setImages(prev => [...prev, ...response]);
+      })
         .catch(error => console.log(error))
         .finally(setLoading(false))
+
     }
 
-    getImages();
+  }, [query, page])
+
+  useEffect(() => {
     scrollPage();
+  }, [images]);
 
+  const getImages = async (query, page) => {
+    try {
+      const response = await axios.get(
+        `https://pixabay.com/api/?q=${query}&page=${page}&key=29202884-ba403f8614fd116f5e6699f2a&image_type=photo&orientation=horizontal&per_page=12`
+      );
+      return response.data.hits;
 
-  }, [page, query, images]
-  )
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
 
-  // const getImages = async () => {
+    }
 
-  //   await getGalleryData({ query, page })
-  //     .then(result => {
-  //       setImages(prev => [...images, ...result.images])
-  //       console.log(result.images);
-  //       setTotal({ total: result.total });
-  //       console.log(result.total)
-  //     })
-  //     .catch(error => console.log(error))
-  //     .finally(setLoading(false))
-  // }
+  };
 
-  const searchImage = query => {
+  const searchImage = (query) => {
     setLoading(true);
+    setImages([]);
     setQuery(query);
     setError(null);
-    setImages([]);
+
     setPage(1);
   }
 
   const loadMore = () => {
-    setPage(prev => prev.page + 1);
+    setPage(prev => page + 1);
+    setLoading(false);
   };
 
   const scrollPage = () => {
@@ -82,16 +81,55 @@ export function App() {
     <>
       <Searchbar onSubmit={searchImage} />
       <Gallery id="gallery">
+        <ImageGallery images={images} />
         {loading && <Loader />}
         {error && <div>Opsss... {error}</div>}
-        <ImageGallery images={images} />
-        {page < total && !error && (
-          <Button clickHandle={loadMore}>LOAD MORE</Button>
-        )}
+
+        {images.length > 0 && <Button clickHandle={loadMore} />}
       </Gallery>
     </>
   );
 }
+
+
+// useEffect(() => {
+//   if (!query) {
+//     return;
+//   }
+//   const getImages = async () => {
+//     await getGalleryData({ query, page })
+//       .then(result => {
+//         console.log(result)
+//         setImages(prev => [...prev, ...result.images])
+//         console.log(images);
+//         setTotal(result.total);
+
+//       })
+//       .catch(error => console.log(error))
+//       .finally(setLoading(false))
+//   }
+
+//   getImages();
+//   scrollPage();
+
+
+// }, [page, query]
+// )
+
+// const getImages = async () => {
+
+//   await getGalleryData({ query, page })
+//     .then(result => {
+//       setImages(prev => [...images, ...result.images])
+//       console.log(result.images);
+//       setTotal({ total: result.total });
+//       console.log(result.total)
+//     })
+//     .catch(error => console.log(error))
+//     .finally(setLoading(false))
+// }
+
+
 
 
 // export class App extends Component {
