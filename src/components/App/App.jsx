@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react';
 import Searchbar from '../SearchBar/Searchbar';
 import ImageGallery from '../ImageGallery/ImageGallery';
-// import { getGalleryData } from 'servises/Api';
-import axios from 'axios';
+import { getImages } from 'servises/Api';
 import { Gallery } from '../ImageGallery/ImageGallery.styled';
 import Button from '../Button/Button';
 import Loader from '../Loader/Loader';
-
-
 
 export function App() {
 
@@ -16,7 +13,7 @@ export function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
-  // const [total, setTotal] = useState(1);
+
 
 
   useEffect(() => {
@@ -32,26 +29,6 @@ export function App() {
 
   }, [query, page])
 
-  useEffect(() => {
-    scrollPage();
-  }, [images]);
-
-  const getImages = async (query, page) => {
-    try {
-      const response = await axios.get(
-        `https://pixabay.com/api/?q=${query}&page=${page}&key=29202884-ba403f8614fd116f5e6699f2a&image_type=photo&orientation=horizontal&per_page=12`
-      );
-      return response.data.hits;
-
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-
-    }
-
-  };
-
   const searchImage = (query) => {
     setLoading(true);
     setImages([]);
@@ -66,17 +43,6 @@ export function App() {
     setLoading(false);
   };
 
-  const scrollPage = () => {
-    const { height: cardHeight } = document
-      .querySelector('#gallery')
-      .firstElementChild.getBoundingClientRect();
-
-    window.scrollBy({
-      top: cardHeight,
-      behavior: 'smooth',
-    });
-  }
-
   return (
     <>
       <Searchbar onSubmit={searchImage} />
@@ -90,46 +56,6 @@ export function App() {
     </>
   );
 }
-
-
-// useEffect(() => {
-//   if (!query) {
-//     return;
-//   }
-//   const getImages = async () => {
-//     await getGalleryData({ query, page })
-//       .then(result => {
-//         console.log(result)
-//         setImages(prev => [...prev, ...result.images])
-//         console.log(images);
-//         setTotal(result.total);
-
-//       })
-//       .catch(error => console.log(error))
-//       .finally(setLoading(false))
-//   }
-
-//   getImages();
-//   scrollPage();
-
-
-// }, [page, query]
-// )
-
-// const getImages = async () => {
-
-//   await getGalleryData({ query, page })
-//     .then(result => {
-//       setImages(prev => [...images, ...result.images])
-//       console.log(result.images);
-//       setTotal({ total: result.total });
-//       console.log(result.total)
-//     })
-//     .catch(error => console.log(error))
-//     .finally(setLoading(false))
-// }
-
-
 
 
 // export class App extends Component {
