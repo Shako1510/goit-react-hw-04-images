@@ -13,14 +13,16 @@ export function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(1);
 
 
 
   useEffect(() => {
     if (query) {
       setLoading(true)
-      getImages(query, page).then(response => {
-        setImages(prev => [...prev, ...response]);
+      getImages(query, page).then(result => {
+        setImages(prev => [...prev, ...result.images]);
+        setTotal(result.total);
       })
         .catch(error => console.log(error))
         .finally(setLoading(false))
@@ -50,8 +52,9 @@ export function App() {
         <ImageGallery images={images} />
         {loading && <Loader />}
         {error && <div>Opsss... {error}</div>}
-
-        {images.length > 0 && <Button clickHandle={loadMore} />}
+        {page < total && !error && (
+          <Button clickHandle={loadMore}>LOAD MORE</Button>
+        )}
       </Gallery>
     </>
   );
